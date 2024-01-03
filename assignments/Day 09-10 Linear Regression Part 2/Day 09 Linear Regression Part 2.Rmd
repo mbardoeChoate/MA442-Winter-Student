@@ -9,17 +9,17 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE, error = TRUE)
 ```
 
-#Linear Regression Day 2
+## Linear Regression Day 2
 
 What you will learn:
 * To review scatterplots
-* To review Simple linear regressions
+* To review simple linear regressions
 * What a residual is and why it is important.
 * How to use the summary function
 * What R-squared means
 
 
-#Warmup
+### Warmup
 
 We will start by using the data set USArrests. 
  
@@ -112,7 +112,7 @@ Predict the murder rate of states with 100 assaults per 100K people, 230 assault
 
 
 
-#Residuals
+### Residuals
 
 
 So far we have been able to create a linear model and use it to make predictions. One key question is how good is that model? In order to determine that we can look at how wrong our predictions were. If we use the predict function without supplying a data frame of values, predict will output a prediction for each of the values in the original data frame.  
@@ -177,7 +177,7 @@ Ideally if the model is good at predicting the response variable, the residuals 
 
 
 
-#Residual Plots
+### Residual Plots
 
 Looking at Residual Plots can also help us tell if we should not have been using a linear model after all. If a model tends to overestimate at low values of x and underestimate at high values our model may not be linear. If the model tends to be accurate at low values of x but poor at high values of x it may not be appropriate. 
 
@@ -251,7 +251,7 @@ Since there is a clear pattern in the Residual Plot, a linear model in not appro
 
 
 
-#The Summary Function
+### The Summary Function
 We can learn more about a regression model by using the summary function:
 
 ```{r}
@@ -270,7 +270,7 @@ From this summary we can see that:
 * The three stars tell us that the variable is significant at the .001 level.
 
 
-#R-squared
+### R-squared
 Another key value we can see in the summary is R-squared (labeled Multiple R-squared in the summary table). R-squared is the percentage of the variation in the response variable is explained by the model. This value will always be between 0 and 1. The closer this value is to 1 the better the model is. 
 
 Here is an example to see how to understand R-squared:
@@ -311,7 +311,7 @@ summary(linearMod.murder.assault)
 
 
 
-#Your Turn
+### Your Turn
 
 Now we will look at a data set that contains the monthly totals of car drivers in Great Britain killed or seriously injured Jan 1969 to Dec 1984. We will be looking to see if the price of gasoline (PetrolPrice) has an effect on the number of drivers killed (DriversKilled).
 
