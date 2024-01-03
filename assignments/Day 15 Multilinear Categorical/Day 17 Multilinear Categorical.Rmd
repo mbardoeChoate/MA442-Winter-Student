@@ -1,0 +1,317 @@
+---
+title: "Regression with a Categorical Variable"
+author: "Carey Kopeikin and Matthew Bardoe"
+date: "4/21/2020 rev 2/8/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+
+
+# Day 15: Regression with a categorical variable
+
+In this data we are looking at the effect of various categorical variables on continuous quantitative variables. This is not the first time we have seen this as we already did it briefly in the housing problem when we tried to find out if knowing if a house had a garage was useful in our model. 
+
+
+Let’s load a dataset that looks at students’ scores on various assessments and several factors that may be associated with the scores.
+
+**NOTE: The data in this dataset is not real. It was created for an educational setting.**
+
+```{R}
+exams<-read.csv("exams.csv")
+```
+
+Let's look at the data using the ```head``` and ```str``` commands.
+
+```{R}
+head(exams)
+str(exams)
+```
+
+
+Let's start by investigating if there are any categorical variables that effect a student’s math scores. For ease, let's focus on ```gender```, ```lunch```, and ```testprep```. The easiest way to see if these variables would be important is to make displays of data that would allow our eye to see the relative impact of these variables. Let's do that now, for instance with gender.
+
+The main way we investigate with categorical variables is with a boxplot. So make one of those comparing gender and mathscore. 
+
+## Creating Graphs and Tables
+
+```{r}
+boxplot(exams$mathscore ~ exams$gender,
+        main = "Math Score by Gender",
+        xlab = "Gender",
+        ylab = "Math Score",
+        col = c("green","blue") )
+```
+
+
+
+We can also use the ```tapply```  function. The code below separates the exam data by gender then calculates the mean, standard deviation, and the number of observations in that group.
+
+```{r}
+
+tapply(exams$mathscore, exams$gender, mean)
+tapply(exams$mathscore, exams$gender, sd)
+tapply(exams$gender, exams$gender, length)
+mean(exams$mathscore, na.rm=TRUE)
+
+```
+
+
+**Question** Describe in your own words the difference in math scores between gender1 and gender2. Use the box plot and the tapply data in your answer.
+
+**Write your answer here**
+
+
+
+
+
+## Using regression
+
+We can also use the tools of regression to look at the effect of gender. To do this we will need to change the data so that gender can be considered a numerical variable. We will do this by introducing a *dummy variable* called ```is.gender2``` that has a value of 0 if the observation is a "gender1", and 1 if observation is a "gender2".
+
+```{r}
+exams$is.gender2 <- ifelse(exams$gender=="gender2", 1,0)
+
+head(exams[ c("gender", "is.gender2")], 10)
+```
+
+
+Now that is.gender2 is quantitative we can make a rather strange scatterplot.
+```{r}
+plot( exams$mathscore ~ exams$is.gender2, 
+     main = "Scatter Plot of Math Scores by Gender",
+     xlab = "Square Feet",
+     ylab = "Price (dollars)",
+     col = "blue",                 
+     bg = "red",                    
+     pch = 21,                    
+     cex = 1.5)                   
+     
+```
+
+
+We can also use it to create a linear model.
+
+```{r}
+linMod.math.isgender2 <- lm( mathscore ~ is.gender2, data = exams)
+
+summary(linMod.math.isgender2)
+```
+
+
+**Question** What does the slope in this regression represent? 
+
+
+
+
+
+**Question** Is it greater, lesser, or equal to effect that what was indicated in the difference of the means above?
+
+
+
+
+**Question** Is gender independent of mathscore? How do you know?
+
+
+
+
+**Question** How useful is gender in predicting mathscore? How do you know? 
+
+
+
+
+
+
+Let's dig deeper into other variables. Let's look at the ```lunch``` variable. And do so in the same way. 
+
+
+Create boxplots comparing math scores by ```lunch``` 
+
+```{r}
+
+```
+
+
+Create a table that compares the mean, standard deviation, and the number of students who get free or reduced lunch to those who do not.
+
+```{r}
+
+```
+
+
+Create a variable ```is.free.lunch``` that assigns a 1 if the student receives free or reduced lunch and a 0 otherwise.
+
+```{r}
+
+
+```
+
+Create a simple linear model with ```mathscores``` as the response variable and ```is.free.lunch``` as the explanatory variable. Then look at the summary of that model.
+
+
+```{r}
+
+```
+
+
+**Question** What have learned about the effect free/reduced lunch has on the expected math scores of students.
+
+
+
+
+**Question** Run a similar analysis on testprep going through all of the steps you went through with the lunch variable. Discuss effect of test prep on math scores.
+
+
+
+
+## Putting it together with Multilinear regression
+
+It is possible that there are connections between the effects of these variables. For instance, between testprep and lunch. Both of these can be connected to family resources. Using multilinear regression, we can look to separate the effects of those. Let's create a model that incorporates all the variables we have so far. 
+
+```{r}
+
+```
+
+
+**Question** Do these results support the theory that there is a connection between each of the variables and mathscore?
+
+
+
+**Question** Why does test prep now have a negative slope?
+
+
+
+
+Try this linear regression with the categorical variables. 
+
+```{r}
+
+```
+
+**Question** How is this different from what we have done above? 
+
+
+
+
+
+
+
+
+Note that the reason for the signs being opposite on the second regression has to do with the order of the levels of the categorical variables. In multi2 R automatically created the variable ```gendergender2``` and assigned a 0 to the value "gender1" and a 1 to the value "gender2" just like we did in the variable ```is.gender 1```. When it created the variable ```lunchstandard``` It assigned a 0 to "free/reduced" and a 1 to "standard". This is because when R creates the variables automatically it looks at the order of the levels of the variables and gives a 0 to the value of the first level and a 1 to the value of the second. The name that R gives the variable will be the name of the original categorical variable followed by the value that is assigned a 1. ```gendergender2``` is made from the variable ```gender``` and the value "gender2" is assigned a 1. ```lunchstandard``` is created from the variable ```lunch``` and the value "standard" is assigned a 1.
+
+If we want to change the order of the levels we just use the same code we have been using for a while
+
+```{r}
+exams$lunch <- factor(exams$lunch,
+                      levels = c("standard", "free/reduced") )
+```
+
+
+Now rerun the code for mult2.
+
+```{r}
+
+```
+
+Notice that ```lunchstandard``` became ```lunchfree/reduced``` and the coefficient is now negative.
+
+
+
+Change the levels so that ```testprepnone``` becomes ```testprepcompleted``` and rerun the code for mult2 
+
+```{r}
+
+```
+
+
+
+Since ```testprepcompleted``` is not useful for our model lets remove it and run a new model.
+
+```{r}
+
+```
+
+**Question** How useful is our model?
+
+
+
+
+We can also have both quantitative and categorical variables in the same model. Lets add "readingscore" into our model.
+
+```{r}
+mult4 <- lm(mathscore ~ gender + lunch + readingscore, data=exams)
+summary(mult4)
+```
+
+**Question** How useful is our model?
+
+
+
+**Question** Which is more useful to our model, ```gendergender2``` or ```lunchfree/reduced```?
+
+
+
+
+
+
+## You try
+
+Find the effects of the ```lunch```, ```gender```, and ```testprep``` on writing score. 
+
+```{r}
+```
+
+**Question** Describe the quantitative expected effect of each variable on writing scores. 
+
+
+
+
+
+
+**Question** A friend is considering taking a test prep course to improve their math scores. Their current score is a 58. They feel that they need at least a 65 to have a chance at their goals. Is such a gain likely given the data here?
+
+
+
+
+
+
+Predict the math score of someone of gender1 who gets free lunch and has completed a test prep class. First think about which model to use.
+
+```{r}
+```
+
+**Question** How accurate do you think your model will be? 
+
+
+
+Predict the math score of someone of unknown gender who gets standard lunch did not take a test prep course and earned a 60 on their reading score.
+
+```{r}
+
+```
+
+**Question** How accurate do you think your model will be? 
+
+
+
+
+Predict the math score of someone of gender2 who did not take a test prep course and earned a 40 on their reading score.
+
+```{r}
+```
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,210 @@
+---
+title: "Multilinear Regression"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "4/15/2020 rev 1/31/2021"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+
+# Day 12 Multilinear regression
+
+Previously we have described how to use one quantitative variable to create a model that predicts another quantitative variable. That process is called regression, and now we will allow ourselves to utilize multiple variables to create our models. Let's start by looking at some data about housing.
+
+Load up the dataset.
+
+```{R}
+houses<-read.csv("Nashville.csv")
+```
+
+
+
+Let's take a look at this data. 
+
+```{R}
+head(houses)
+str(houses)
+
+```
+
+## Nashville houses
+
+This dataset shows us some information about houses that were listed as on sale on the Zillow website in the fall of 2018. Our goal is to create a function or model that will help us predict the value of the home. Let's start by calculating some of the correlations between these variables. This can be most easily done almost at once with the ```cor``` command on the whole data frame.  
+
+```{R}
+cor()
+```
+
+When we use this function there is an error. From what you know about the definition of correlation why do you think the error exists?
+
+Instead we need to exclude the Garage category which makes the code slightly more complicated. We can do this by using indexing to either list the number of the variables that we want to look at or using the subtraction symbol exclude the ones that we don't want. For this data set with seven variables the following two lines are equivalent. Note that the *Garage* column is a factor not a numeric variable and is column number 4, and we are trying to exclude it.
+
+houses[ , c(1,2,3,5,6,7)]
+
+houses[ , -4] 
+
+```{r}
+cor( houses[ , -4] )
+```
+
+
+*Based on this chart which variables seems to have the strongest correlation with Price?*
+
+
+Even more interesting than the ```cor``` function is the ```plot``` function when you don't have too many variables.
+
+```{R}
+plot( houses[, -4] )
+```
+
+
+**Question** Which variables are correlated to the price? Which of these do you believe? Which don't make sense?
+
+*Your answer here*
+
+
+
+Let's make a scatter plot to see the relationship between price and square footage.
+```{r}
+
+
+```
+
+The graph appears linear, positive, and weak.
+
+Since the variables are quantitative and linear, we can create a regression model and add the line of best fit.
+
+```{r}
+#Run regression
+
+#Print summary
+
+#Scatter plot
+
+#Line of best fit
+
+```
+
+
+Note several things in the summary. The asterisks at the end of the Coefficient table tell us that there is statistical evidence for a relationship between the variable Sqft and Price. 
+
+
+**Question** What percentage of the variation in price is explained by variation in the square footage? Where do you find that number in the summary?
+
+
+
+
+**Question** What is the coefficient of square footage in the equation of our model? What does it mean in context of this problem?
+
+
+
+
+
+## Multilinear Analysis
+
+It looks as though square footage is not the only major contributor to the price of the house. The number of bathrooms seems to be another variable that would make a difference, especially considering its correlation with the price. Note that this new model attempts to see how the both the square footage and the number of bathrooms predict the price of a house.
+
+```{R}
+multiMod.price.sqft.bath <- lm(Price ~ Sqft + Bathrooms, data=houses)
+
+summary(multiMod.price.sqft.bath)
+```
+
+
+### Analyze the Coefficient Table
+
+There are a few things that should be shocking about this summary. The first is the coefficient for bathrooms. What does that coefficient mean in context?
+
+*Your answer here*
+
+
+The second is the lack of asterisks by bathrooms. What does this mean in context?
+
+*Your answer here*
+
+
+
+Our model would be better without using Bathrooms as an explainatory variable. The Bathrooms variable doesn't seem to add to the explanatory power enough. It is probable that square footage and bathrooms are both closely related to the size of the house. So when we have both of those variables we are basically using the same information to predict the price. The square footage is a more precise measurement of the house's size so let's keep that variable.
+
+Now let's try to add the variable Bedrooms to our model.
+
+```{R}
+## Create model with Sqft and Bedrooms
+multiMod.price.sqft.bed <- lm(Price ~ Sqft + Bedrooms, data=houses)
+## Show summary
+summary(multiMod.price.sqft.bed)
+```
+
+What does this summary tell you about the new model?
+
+*Your answer here*
+
+
+
+###Was a multilinear model appropriate? 
+
+Find the predictions and residuals of for the model multiMod.price.sqft.bed
+
+
+
+Create a residual plot.
+
+
+
+
+Is a multilinear model appropriate? How do you know?
+
+
+
+### Make a prediction
+
+As we did last week, we can make predictions base on our models. 
+
+Here is how we would make a prediction based on our simple model that just uses square footage. To predict houses with square footage of 4,050 sqft, 2,300 sqft, and 1,400 sqft:
+
+```{r}
+# create prediction data frame
+
+# calculate predictions
+
+# display predictions
+
+```
+
+
+To make a prediction with our multilinear model we simply must put in more information. To predict a 3 bedroom house with 4,050 sqft, a 2 bedroom house with 2,300 sqft and a 5 bedroom house with 1,400 sqft. 
+
+```{r}
+predict.data.frame <- data.frame( Sqft = c(4050, 2300, 1400 ), Bedrooms = c(3, 2, 5) )
+
+predict.data.frame$Predicted.price <- predict(multiMod.price.sqft.bed, predict.data.frame)
+
+predict.data.frame
+```
+
+
+
+
+### How much better is multiMod.price.sqft.bed than linearMod.price.sqft
+
+
+How much more of the variation does multiMod.price.sqft.bed explain than linearMod.price.sqft? 
+
+*Your answer here*
+
+
+
+
+
+How much more did multiMod.price.sqft.bath explain than linearMod.price.sqft?
+
+*Your answer here*
+
+
+
+

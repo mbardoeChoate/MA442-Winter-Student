@@ -1,0 +1,40 @@
+Subject,Treatment ,Gender,Age,Positive_Affect_Score,Negative_Affect_Score
+1,Happiness ,Female,19 or above,40,10
+2,Happiness ,Female,19 or above,28,15
+3,Happiness ,Male,19 or above,32,10
+4,Happiness ,Female,10-19,19,16
+5,Happiness ,Female,19 or above,20,15
+6,Happiness ,Male,19 or above,27,15
+7,Happiness ,Female,10-19,24,21
+8,Happiness ,Male,19 or above,39,11
+9,Gratitude,Female,10-19,20,27
+10,Gratitude,Male,10-19,16,10
+11,Gratitude,Female,19 or above,10,10
+12,Gratitude,Female,19 or above,32,13
+13,Gratitude,Male,19 or above,38,18
+14,Gratitude,Female,19 or above,19,16
+15,Gratitude,Female,19 or above,32,15
+16,Gratitude,Female,19 or above,36,10
+17,Gratitude,Male,10-19,22,15
+18,Sadness,Female,19 or above,23,11
+19,Sadness,Male,10-19,38,26
+20,Sadness,Female,19 or above,34,20
+21,Sadness,Male,19 or above,21,16
+22,Sadness,Male,19 or above,25,17
+23,Sadness,Female,10-19,20,23
+24,Sadness,Male,10-19,23,11
+25,Sadness,Female,10-19,15,14
+26,Disgust,Male,10-19,22,11
+27,Disgust,Male,19 or above,27,10
+28,Disgust,Male,10-19,21,20
+29,Disgust,Female,10-19,23,34
+30,Disgust,Female,19 or above,20,14
+31,Disgust,Male,10-19,16,10
+32,Disgust,Female,10-19,25,15
+33,Control,Female,10-19,33,22
+34,Control,Female,19 or above,13,13
+35,Control,Male,19 or above,39,12
+36,Control,Female,19 or above,11,11
+37,Control,Female,19 or above,28,10
+38,Control,Female,19 or above,36,19
+39,Control,Male,19 or above,31,12

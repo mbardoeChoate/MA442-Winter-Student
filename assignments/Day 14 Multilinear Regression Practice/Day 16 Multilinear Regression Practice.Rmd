@@ -1,0 +1,119 @@
+---
+title: "Multilinear Regression"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "4/15/2020"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+
+## Your Turn
+
+Load up the dataset for Prices for Used Camrys. Follow the steps to create a multilinear model to estimate the price of a Used Camry. 
+
+```{R}
+camry <- read.csv("Camry.csv")
+head(camry)
+```
+
+
+**Question** Create a table that shows the correlations of all the numeric variables.
+
+```{r}
+
+```
+
+
+
+
+**Question** Create a plot showing scatterplots of all the numeric variables.
+
+```{r}
+
+```
+
+
+
+**Question** Create a simple linear model predicting price from the mileage. Find the percent of the variation of the price that is explained by the variation in the mileage.
+
+
+```{r}
+
+
+```
+
+
+**Question** Write down the linear model.
+
+
+
+
+**Question** Explain what the model written above means in context.
+
+
+
+
+**Question** Create the best multi-linear model you can predicting price from all other numeric variables that are significant to the price. 
+
+```{r}
+
+
+```
+
+
+**Question** Write down the multi linear model.
+
+
+
+
+**Question** Explain what the model written above means in context.
+
+
+
+
+**Question** Find the percent of the variation of the price that is explained by this model.
+
+
+
+
+**Question** How much better is the multilinear model than the simple linear model?
+
+
+
+
+
+**Question** Predict the price of 3 cars: A 2013 Camry with 32,000 miles and 25mpg highway, a 2010 Camry with 89000 and 21mpg highway, and a 2016 Camry with 90000 miles and 26mpg highway.
+
+
+```{r}
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

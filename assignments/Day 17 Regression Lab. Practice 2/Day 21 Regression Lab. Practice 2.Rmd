@@ -1,0 +1,95 @@
+---
+title: "Regression Lab Practice 2"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "2/16/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+# Preliminaries
+
+This is a test. You are expected to follow the honor code. You may not give or receive unauthorized aid.
+
+Authorized Aid for this assessment includes:
+
+All static internet sources (blog posts, webpages, manuals, etc.) You may not use sites that allow you to post questions that are then answered by other people, but you are allowed to read other people's answers to other people's questions that have been posted prior to this test. 
+
+*Type your name here to indicate you pledge of the honor code.*
+
+
+
+In this lab you are given the choice of datasets. You are expected to create a document showing your efforts to use linear regression to find a predictive model based on that data. 
+
+The datasets are:
+
+1. ```Birthweight.csv```
+
+
+From the Child Health and Development Studies conducted at the Oakland, CA, Kaiser Foundation Hospital. The variables are:
+
+headcirumference: the baby's head circumference in inches
+
+length: the baby's length in inches
+
+Birthweight: baby's weight in ounces at birth
+
+Gestation: duration of pregnancy in weeks
+
+smoker: indicator for whether mother smokes 
+
+mheight: mother's height in inches
+
+mppwt: mother's weight in pounds (pre-pregnancy)
+
+mage35: Was the mother over 35 years old
+
+
+## Regression Lab 
+
+In this lab you will be asked to choose from the datasets described above. You will be asked to determine some variable within that dataset to try and predict. Then in this document show your process to finding that model. Finally you will be given a few rows of data and you are to compare your predictions in those rows with the true answers in the data.
+## Instructions
+
+* Explore the data, and decide on a variable to predict using linear or multilinear regression
+
+* Use the techniques that you have learned in class to create an equation for that variable, and make sure that your equation explains as much as you can, but does not overfit the data. Show your work and comment on the choices that you make. Tell the story of how you came to this model.
+
+* MAKE SURE TO EXPLAIN EACH STEP OF THE PROCESS. THE MOST IMPORTANT PART OF YOUR GRADE IS EXPLAINING YOUR THOUGHT PROCESS. A GOOD MODEL ALONE IS NOT ENOUGH. 
+
+**I chose the dataset:**
+
+
+**I chose the variable:**
+
+
+
+
+### Exploration
+Do any preliminary work here.
+
+
+### Model Creation
+Create your model and explain why you are making each of your decisions.
+
+
+
+### Model Description
+Write down your model and describe what each part tells us. Also comment on the strength of the model.
+
+
+
+
+### Prediction
+Use the appropriate csv filenames to load a dataframe to make predictions on.
+
+* birthweight-Predict.csv
+
+
+
+### Residuals
+Make a display of the residuals and discuss the appropriateness of your model. 
+
+
+
+

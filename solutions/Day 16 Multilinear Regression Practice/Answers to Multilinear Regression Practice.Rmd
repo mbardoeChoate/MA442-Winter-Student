@@ -1,0 +1,153 @@
+---
+title: "Multilinear Regression"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "4/15/2020"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+
+## Your Turn
+
+Load up the dataset for Prices for Used Camrys. Follow the steps to create a multilinear model to estimate the price of a Used Camry. 
+
+```{R}
+camry <- read.csv("Camry.csv")
+head(camry)
+```
+
+
+**Question** Create a table show the correlations of all the numeric variables.
+
+```{r}
+cor(camry[c(-2, -3, -4)])
+```
+
+
+
+
+**Question** Create a plot showing scatterplots of all the numeric variables.
+
+```{r}
+plot(camry[c(-2, -3, -4)])
+```
+
+
+
+**Question** Create a simple linear model predicting price from the mileage. Find the percent of the variation of the price that is explained by the variation in the mileage.
+
+
+```{r}
+plot( camry$Price ~ camry$Mileage, 
+     main = "Scatter Plot of Price vs. Mileage",
+     xlab = "Mileage",
+     ylab = "Price",
+     col = "red",  
+     pch = 18,
+     cex = 1.5)
+
+```
+
+
+**Question** Write down the linear model.
+```{r}
+linearMod.price.mileage <- lm(Price ~ Mileage, data = camry)
+print(linearMod.price.mileage)
+
+summary(linearMod.price.mileage)
+```
+
+*Predicted price = -.075(miles) + 15,830
+
+
+
+**Question** Explain what the model written above means in context.
+*The three asterisks means that the relationship between price and mileage is not just due to random variation.*
+
+*For each additional mile I would expect the price to go down by $.07. If a car had 0 miles I would predict that it would cost 15,000.*
+
+**Question** Create the best multi-linear model you can predicting price from all other numeric variables that are significant to the price. 
+
+```{r}
+multiMod.price.mileage.year <- lm(Price ~ Mileage + ModelYear + MPG_Highway, data=camry)
+
+summary(multiMod.price.mileage.year)
+
+```
+
+
+```{r}
+multiMod.price.mileage.year <- lm(Price ~ Mileage + ModelYear, data=camry)
+
+summary(multiMod.price.mileage.year)
+
+```
+
+
+**Question** Write down the multi linear model.
+*Predicted Price = -.02889(Mileage) + 615.9(ModelYear) -1,227,000
+
+
+
+**Question** Explain what the model written above means in context.
+*This means that for each additional model year, we expect the price will go up by $615.9 holding all other variables constant and for each additional mile on the car we expect the price  will decrease by 0.02889 holding all other variables constant.*
+
+
+
+**Question** Find the percent of the variation of the price that is explained by this model.
+*It explains 78.5% of car prices.*
+
+
+
+**Question** How much better is the multilinear model than the simple linear model?
+*The simple model explained 65.44% of prices, but the multilinear model explains 78.5%, so the second one is .785/.6544 = 1.2 times better.*
+
+
+
+
+**Question** Predict the price of 3 cars: A 2013 Camry with 32,000 miles, a 2010 Camry with 89000, and a 2016 Camry with 90000 miles.
+
+
+```{r}
+predict.data.frame <- data.frame( Mileage = c(32000, 89000, 90000 ), ModelYear = c(2013, 2010, 2016) )
+
+predict.data.frame$Predicted.price <- predict(multiMod.price.mileage.year, predict.data.frame)
+
+predict.data.frame
+
+
+```
+
+```{r}
+-.02889*(32000) + 615.9*(2013) -1227000
+
+```
+
+
+```{r}
+-.02889*(Mileage) + 615.9*(ModelYear) -1227000
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

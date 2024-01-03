@@ -1,0 +1,179 @@
+---
+title: "Day 23 Anova part 2"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "2/23/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+```
+
+## ANOVA part 2
+
+### An Exploration of Affect
+
+A few years ago Choate student, Katrina Miao, studied the effect of different levels of Positive Affect and Negative Affect on how much student would pay for different items, and also if she could seed positive or negative affect with different treatments designed to elicit certain reactions.  
+
+Students watched a video to elicit reaction to influence their affect. Katrina used a well designed psychological survey to determine the subjects Postive Affect and Negative Affect. The following quote from "Positive and Negative Affect Schedule (PANAS): psychometric properties of the online Spanish version in a clinical sample with emotional disorders" by Amanda Díaz-García, Alberto González-Robles, Sonia Mor, Adriana Mira, Soledad Quero, Azucena García-Palacios, Rosa María Baños & Cristina Botella does a good jobe explaining the meaning of postive affect and negative affect:
+
+> In recent decades, a growing number of studies have tried to investigate the structure of affect. Most of these studies agree that the affective experience has two dominant dimensions, namely, positive affect (PA) and negative affect (NA)  ...  These two factors have been conceptualized as two independent and uncorrelated dimensions of affect. Whereas PA reflects the “extent to which individuals feel enthusiastic, active, and alert”, NA involves a variety of aversive mood states, such as anger, guilt, and fear. The data suggest that low levels of PA are related to and predict the onset of depression, and that high PA is associated with greater well-being. By contrast, low NA indicates a state of calmness and serenity, whereas high NA is characteristic of anxiety. The two dimensions of affect (PA and NA) have been crucial in the conceptual differentiation between depression and anxiety disorders. In addition, PA and NA have also been strongly related to Extraversion and Neuroticism personality dimensions, respectively.
+
+
+### Treatments
+Let's look at a portion of Katrina's data:
+
+```{r}
+affect <- read.csv("affect.csv")
+head(affect)
+dim(affect)
+```
+We want to see if the treatment seems to have had any effect on the Positive Affect of the subjects. Here are our Null Hypothesis is that the means of Positive Affect for the different treatment groups are all equal. 
+
+*Do a calculation of the means, standard deviations, and lengths for the each treatment group.*
+
+```{r}
+tapply(affect$Positive_Affect_Score, FUN = mean, affect$Treatment )
+tapply(affect$Positive_Affect_Score, FUN = sd, affect$Treatment )
+tapply(affect$Positive_Affect_Score, FUN = length, affect$Treatment )
+
+```
+
+
+*Create a comparative boxplot for the Positive Affect Score by group.*
+
+```{r}
+boxplot(affect$Positive_Affect_Score ~ affect$Treatment, 
+        main="Positive_Affect_Score by Treatment Group",
+        ylab="PA Score",
+        xlab = "Treatment",
+        col=c(2:6))
+
+```
+
+*Does there appear to be a connection between the variables?*
+
+
+
+*Based on the information above, are you worried about any of the conditions nedded for ANOVA, see below:*
+
+There are some assumptions that the data must meet to make the test be valid. These are:
+
+* Simple Random Sampling or independent observations
+* Independent groups
+* Standard deviation across groups are the same
+* Each group has a large enough number of observations (n>20). This supports normality.
+
+
+
+
+
+
+*We will try an ANOVA test anyway. Write your null and alternative hypothesis for an ANOVA test*
+
+$$H_0: The\ mean\ PA\ scores\ for\ all\ the\ groups\ are\ the\ same\\ H_a:\ At\ least\ one\ score\ is\ different$$
+
+
+
+*Do an ANOVA test to see if there is a connection between the treatment and Positive Affect Score*
+
+```{r}
+anov.pa.treat <- aov(affect$Positive_Affect_Score ~ affect$Treatment)
+summary(anov.pa.treat)
+```
+
+*Based on these results do you think that the treatment effected the PA of the subjects?*
+
+We fail to reject the null hypothesis that the groups are the same.
+
+*What conclusions do you have about your null and alternative hypothesis?*
+
+If it is true that all of the means of the PAs were really the same. We would see results this strange or stranger 61.4% of the time when we sample similar amounts of people.
+
+
+*If you reject the null hypothesis check your residual graph and qqplot then run a TukeyHSD test.*
+
+
+
+
+
+
+### Two-way ANOVA
+
+Let's look at the way age and gender interact with the Negative Affect Score.
+
+To start we are going to make a more complicated boxplot than we normally do. We are going to create a new category based on two different categorical variables we have already ```Age``` and ```Gender```. Instead of making two different boxplots we will make one that includes the data broken down by the different answers to those variables.
+
+```{r}
+boxplot(affect$Negative_Affect_Score ~ affect$Age*affect$Gender, 
+        main="Do Gender and Age interact with Negitive Affect",
+        ylab="NA Score",
+        xlab = "Groups by Age and Gender",
+        col=c(2:5))
+```
+One of our graphs looks pretty different. Now one thing that might cause this differential is if the number of subjects in each category is very different. Let's take a look.
+
+```{r}
+table(affect$Age)
+```
+There are more old people than young people.
+
+```{r}
+table(affect$Gender)
+```
+There are more females than males
+
+Here are the breakdowns of the four boxplots
+```{r}
+table(affect$Age, affect$Gender)
+```
+
+So it seems that the group of 19 or above Females is twice as big as the other groups taking our survey. The other three groups have a similar number of subjects The box plot that looks different is one of the ones where we have a similar amount of subjects as others.
+
+We will look to see if both Age and Gender play a role in the NA Score. We do this in roughly the same way that we did in linear regression.
+
+
+Our hypotheses here are:
+H_01: Age on its own has no effect on NA score (the means of each age group are the same)
+H_a1: Age on its own has some effect on NA score
+
+H_02: Gender on its own has no effect on NA score (the means of each gender are the same)
+H_a2: Gender on its own has some effect on NA score
+
+H_03: The interactions between Age and Gender has no effect on NA score (the means of each age/gender group are the same)
+H_a3: The interactions between Age and Gender has some effect on NA score
+
+```{r}
+aovNA.age.gender <- aov(affect$Negative_Affect_Score ~ affect$Age * affect$Gender)
+summary(aovNA.age.gender)
+```
+
+
+
+Based on our p-values we see stars for Age and Age:Gender but not Gender. Because the interaction variable has a star we can not consider the categories separately. We need to look at the combined effects.
+
+We can perform the TukeyHSD test:
+
+```{r}
+TukeyHSD(aovNA.age.gender)
+```
+Here we ignore the effects of only Age and only Gender and look at the combined effects. 
+
+*What did the TukeyHSD test tell us?*
+ 
+
+
+
+#### Your Turn
+
+Read in the Diet_R data set the descriptions of the variables are in the  Diet_data_description file. Examine the effects of Gender and Diet on weight after 6 weeks.
+
+
+```{r}
+diet <- read.csv("Diet_R.csv")
+diet$weight.loss <- diet$pre.weight-diet$weight6weeks
+head(diet)
+```
+
+
+

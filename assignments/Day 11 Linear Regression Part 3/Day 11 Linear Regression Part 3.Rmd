@@ -1,0 +1,155 @@
+---
+title: "Day 10 Linear Regression Part 3"
+author: "Carey Kopeikin"
+date: "1/9/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#Linear Regression Day 3
+
+What you will learn in this lesson:
+
+* Interpreting residual plots
+* What to do with data that is non linear
+
+
+#Example 1
+Upload the data set ```nonlinear.examples.csv``` and call it ```examples.data```
+
+```{r}
+examples.data <- read.csv("nonlinear.examples.csv")
+```
+
+
+Create a scatterplot with labels with Var1 as the explanatory variable and Var2 as the response variable. 
+
+```{r}
+
+```
+
+Describe the shape, direction, and strength of the association:
+*Your answer here.*
+
+
+
+Is it appropriate to use correlation to talk about the relationship between these variables? Explain why or why not.
+
+*Your answer here.*
+
+
+
+Find the correlation
+```{r}
+
+```
+
+
+Create a linear model and print out the results.
+
+```{r}
+
+```
+
+Make a scatterplot that includes the line of best fit.
+
+```{r}
+
+```
+
+Find the predicted values and the residuals and add them to the data frame. 
+
+```{r}
+
+```
+
+
+Make a graph of the predicted values and the residuals.
+
+```{r}
+
+
+```
+
+
+Do you still think a linear model is appropriate? Why?
+
+
+
+```{r}
+
+```
+
+
+
+#Example 2
+Upload the data set ```nonlinear.examples.csv``` and call it ```examples.data```
+
+```{r}
+examples.data <- read.csv("nonlinear.examples.csv")
+```
+
+
+Create a scatterplot with labels with Var1 as the explanatory variable and Var3 as the response variable. 
+
+```{r}
+
+```
+
+Describe the shape, direction, and strength of the association:
+*Your answer here.*
+
+
+
+Is it appropriate to use correlation to talk about the relationship between these variables? Explain why or why not.
+
+*Your answer here.*
+
+
+
+Find the correlation
+```{r}
+
+```
+
+
+Create a linear model and print out the results.
+
+```{r}
+
+```
+
+Make a scatterplot that includes the line of best fit.
+
+```{r}
+
+```
+
+Find the predicted values and the residuals and add them to the data frame. 
+
+```{r}
+
+```
+
+
+Make a graph of the predicted values and the residuals.
+
+```{r}
+
+
+```
+
+
+Do you still think a linear model is appropriate? Why?
+
+
+
+```{r}
+
+```
+
+

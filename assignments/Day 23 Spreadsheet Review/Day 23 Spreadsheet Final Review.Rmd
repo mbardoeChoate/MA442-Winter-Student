@@ -1,0 +1,38 @@
+---
+title: "Day 23 Spreadsheet Review"
+author: "Matthew Bardoe"
+date: "2023-12-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Day 3: Advanced Pivot Table Techniques and Finalizing the Retirement Model
+
+**Objective:** Dive deeper into pivot tables and finalize the retirement savings model.
+
+#### Lesson Breakdown:
+
+1. **Advanced Pivot Table Techniques (30 minutes)**
+   - Teach sorting, filtering, and different types of summarization in pivot tables.
+   - Discuss how to interpret results from pivot tables.
+   - Hands-on exercise: Students apply these techniques to the provided dataset.
+
+2. **Finalizing the Retirement Model (20 minutes)**
+   - Introduce goal seek to optimize retirement savings.
+   - Students use goal seek to find optimal savings rates or retirement ages.
+   - Discuss linking data across multiple sheets for complex models.
+
+3. **Wrap-up and Q&A (10 minutes)**
+   - Recap the key learnings from the unit.
+   - Address any remaining questions.
+   - Optional: Provide a small project or assessment, such as optimizing a provided retirement model using the techniques learned.
+
+### Additional Tips:
+- **Real-World Data:** Use real-world financial data where possible to enhance learning.
+- **Progressive Complexity:** Start with simple concepts and gradually introduce complexity to keep students engaged without overwhelming them.
+- **Interactive Learning:** Encourage students to experiment with their models, tweaking assumptions and observing outcomes.
+
+This structure provides a hands-on, practical approach to learning spreadsheets, with a focus on a relevant and engaging project.

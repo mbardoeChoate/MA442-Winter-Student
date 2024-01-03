@@ -1,0 +1,139 @@
+---
+title: "Linear Regression Practice"
+author: "Carey Kopeikin"
+date: "2/2/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+```
+
+
+Load up the data set Indian.Ag
+
+```{r}
+iag.data <- read.csv("IndianAg.csv")
+```
+
+Create a scatter plot of Cost of Cultivation vs. Yield. Make sure to put the explanatory and response variables on the correct axis.
+
+```{r}
+plot(iag.data$Yield ~ iag.data$Cost.of.Cultivation)
+
+```
+
+Is it appropriate to use a linear model to describe the association between the variables? Why or why not?
+
+*Your answer here*
+Yes both variables are quantitative and the data appears linear
+
+
+Create a linear model for the two variables.
+
+```{r}
+lin.mod.Yield.Coc <- lm( Yield ~ Cost.of.Cultivation, data = iag.data)
+lin.mod.Yield.Coc
+```
+
+
+Find the predicted values and the residuals and add them to the data frame. 
+
+```{r}
+iag.data$Predictions <- predict(lin.mod.Yield.Coc)
+iag.data$Residuals <- resid(lin.mod.Yield.Coc)
+```
+
+
+Make a graph of the predicted values and the residuals.
+
+```{r}
+plot(iag.data$Residuals ~ iag.data$Predictions)
+
+abline(0,0)
+
+```
+
+
+Do you still think a linear model is appropriate? Why?
+
+Yes the residual plot is clould like which confirms that the original data was linear.
+
+Find the summary of the linear model.
+
+```{r}
+summary(lin.mod.Yield.Coc)
+```
+
+Write the equation of the model
+
+predicted Yield = .0010814 * Cost.of.Cultivation + 1.2908493
+
+Could the association between Cost of Cultivation and Yield be due to random variation? Why or why not?
+
+No as there are 3 stars next to the cost of cultivation. This means that the likelihood that the relationship we found between the the two variables due to coincidence is very small. 
+
+
+How good is the model at explaining the variation in Yield?
+
+Not great as cost of cultivation only explains 26.12% of the variation in Yeild.
+
+Part 2
+
+Create a scatter plot of Extra Costs vs. Yield. Make sure to put the explanatory and response variables on the correct axis.
+
+```{r}
+
+
+```
+
+Is it appropriate to use a linear model to describe the association between the variables? Why or why not?
+
+*Your answer here*
+
+
+
+Create a linear model for the two variables.
+
+```{r}
+```
+
+
+Find the predicted values and the residuals and add them to the data frame. 
+
+```{r}
+
+```
+
+
+Make a graph of the predicted values and the residuals.
+
+```{r}
+
+
+```
+
+
+Do you still think a linear model is appropriate? Why?
+
+
+
+Find the summary of the linear model.
+
+```{r}
+
+```
+
+Write the equation of the model
+
+
+
+Could the association between Extra Costs and Yield be due to random variation? Why or why not?
+
+
+
+
+
+How good is the model at explaining the variation in Yield?
+
+

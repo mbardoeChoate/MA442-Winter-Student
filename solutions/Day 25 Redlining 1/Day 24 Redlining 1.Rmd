@@ -1,0 +1,96 @@
+---
+title: "Day 20: Redlining 1"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "2/27/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Redlining
+
+Redlining is the practice of determining the values of homes and the risk associated with home loans primarily on the racial and ethnic character of a neighborhood. It specifically refers to maps that were made in the 1930's that mapped neighborhoods of cities across the country, and described them in terms of the housing stock and the racial and ethnic make up of the neighborhoods. At that time, the  Home Owners' Loan Corporation (HOLC) mapped neighborhoods that fell in to 1 of 4 classifications (A-Best, B-Still Desirable, C-Definitely Declining, D-Hazardous). The areas that were classified as D were colored red on the maps, and thus the term redlining. The D areas were areas that often had large Black populations or other populations that were discriminated against at the time such as immigrants and Jews.
+
+
+Take a moment and read the following article to get a better understanding of Redlining.
+
+https://www.npr.org/sections/thetwo-way/2016/10/19/498536077/interactive-redlining-map-zooms-in-on-americas-history-of-discrimination
+
+
+
+
+### Building the dataset
+
+Our goal today is to start to build a dataset that helps us to investigate to how much the effect of these designations may have had on housing values today in New Haven, CT. We could do other municipalities, but New Haven is close to us, and I would like to reduce variability in the price by looking at only one locale.
+
+
+#### Step 1 Housing Data
+
+First we need to get some data about the value of houses today in New Haven. Each of us will have our own spreadsheet. Please use this google template, here 
+
+https://docs.google.com/spreadsheets/d/1AGhsKt3TsvU316oci84BZebK4JrtoyBKmK5vl8CQKP0/template/preview
+
+Put your name in the title of the spreadsheet, and be sure to share it with me so that I can consolidate it to one sheet later.
+
+Then go to:
+
+https://www.zillow.com/new-haven-ct/
+
+Choose a 5-7 houses for sale and get the information listed at the top of the spreadsheet in the columns that are colored green:
+
+  * Url	
+  * Zestimate	
+  * Price	
+  * Bathrooms	
+  * Bedrooms	
+  * Living Area	
+  * Home Type	- This should be SINGLE FAMILY HOME
+  * Street Address	
+  * City - This should be New Haven
+  * Zip	
+  * State	- This should be CT
+  * Country - This should be USA
+
+We want to make sure our data is consistent in the following ways:
+
+  * We are only interested in homes for sale.
+  * We want units to be the same.
+  * Only choose houses that are for sale today
+  * When typing in a zipcode please start with the the ' character. This will make the zero appear.
+
+
+#### Step 2 Redlining Data
+
+Now there are a few more bits of information to determine.  
+
+Go to the website:
+
+https://dsl.richmond.edu/panorama/redlining/#loc=11/41.303/-73.07&city=new-haven-ct
+
+This website contains valuable information about the various redlining neighborhoods in New Haven from the thirties. 
+
+Click on one of the neighborhoods to find out more about it. For instance, click on E5 section that is just at the north end of the bay near downtown. Then scroll through the description for that neighborhood from the 30's. Be sure to look at the scan of the original document. 
+
+I want you to determine if the houses that you chose in zillow are in one of these neighborhoods. If they are in one of the neighborhoods I want you add that data about what the neighborhood was listed as in the HOLC documents to the spreadsheet.
+
+For each of your houses that you find in one of the neighborhoods fill in the following fields. 
+
+  * HOLC Region - For instance if my house were in the neighborhood just east of downtown that we looked I would put in E5.
+  * HOLC Rating - This is just the letter from the neighborhood, for instance, E.
+  * HOLC 1937 Predominant Value - This is often written something like 6M. This means 6000.
+  * HOLC Percent Foreign Born
+  * HOLC Percent Black - This uses document uses the term Negro.
+  * HOLC Infiltration of - This describes in 1930's language the make up of the neighborhood.
+
+If a house is not in one of the neighborhoods put NA in the HOLC Region field.
+
+#### Next Steps
+
+Our next steps would be conglomerate the data and then start to analyze it.
+
+#### Homework
+
+Describe at least 5 graphs or calculations you would do with the dataset if you were interested in seeing the impact of redlining. 
+

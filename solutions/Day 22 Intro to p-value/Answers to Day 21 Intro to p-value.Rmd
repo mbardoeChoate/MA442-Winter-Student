@@ -1,0 +1,258 @@
+---
+title: "Intro to P-Value"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "2/21/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+## p-value
+
+We are going to learn about a difficult concept in statistics today, *p-value*. It turns out that this is hard, and to get a sense of how hard let's look at the following at the following article and video:
+
+https://fivethirtyeight.com/features/not-even-scientists-can-easily-explain-p-values/
+
+In the article it quotes Regina Nuzzo as saying that " You can get it right, or you can make it intuitive, but it’s all but impossible to do both."
+
+We can see that even experts have difficulty explaining p-value. Here is a video that tries to explain it clearly, and even the folks at Crash Course I think make it look pretty hard.
+
+https://www.youtube.com./watch?v=bf3egy7TQ2Q
+
+### Some examples
+
+We have been using p-value already, we just didn't go into to it too much. In the linear regressions that we have doing we have been evaluating the size of coefficients. Let's look at an example that we have seen before. We have calculated the relationship between the price of a used car and the mileage.
+
+```{r}
+camry <- read.csv("Camry.csv")
+
+head(camry)
+
+linMod1 <- lm(Price~Mileage, data=camry)
+
+summary(linMod1)
+```
+
+### Seeing Stars
+
+The major question in linear regression is if there is a relationship between the response variable and explanatory variable. If the coefficient of a variable were reasonably believed to be zero. 
+
+In this example about camrys we have a very small coefficient for the Mileage variable, -.07465. So it might be reasonable to think it could be zero. But we have more information. In the table we see that the Standard Error is also very small. Which means that there isn't a lot of variation in what would be possible for the coefficients. To get a handle on how possible zero is we calculate the p-value of zero compared to coefficient. If it is quite small then the we can feel confident that the coefficient isn't zero. That's why we look at the stars.
+
+
+### Hypothesis
+
+Whenever we talk about p-value there has be what is called a Null Hypothesis. Often the Null Hypothesis is the opposite of what we want to show. In the case of the linear regression we have the hypothesis that the coefficient is zero. We have to have to that hypothesis in order to determine the p-value. 
+
+An argument of this type is sometimes called a reductio ad absurdum argument. Where we make a hypothesis and hope that the evidence contradicts that hypothesis by so much as to make the original hypothesis seen ridiculous. Then we reject our initial hypothesis. 
+
+
+The null hypothesis in linear regression is that the coefficient equals 0 and the alternative hypothesis is that the coefficient does not equal 0.
+
+$$ H_0: b_1 = 0\\ H_A: b_1 \neq 0$$
+
+what we need to show is that given the observed data it would be ridiculous for us to believe the null hypothesis is true.
+
+***SEE THE APENDEX FOR HOW WE DO THIS***
+
+
+### Your example
+
+*Give an example of a time that you determined something because the opposite idea seemed ridiculous, but not impossible.
+
+
+
+
+
+### Coin Example
+
+Suppose some shows you a coin. What is your initial hypothesis about the probability of getting heads when you flip a coin?
+
+
+
+#### Some example calculations
+
+Suppose that your friend shows you a coin and then flips the coin 3 times and gets 3 heads. Seems unusual, but unusual enough to assume your previous ideas are wrong about a coin? Let's run a simulation to determine how unusual. We start by assuming your Null Hypothesis that the coin is fair.
+
+```{r}
+flips.1 <- sample( c("Heads", "Tails"),
+                   prob=c(.5, .5),
+                   size=3,
+                   replace=TRUE)
+
+flips.1
+```
+
+Because we want to count the number of heads it will be easier if we represent heads as 1 and tails as 0. Note that the code below is the same idea where we flip a coin 3 times. 
+
+```{r}
+
+flips.2 <- sample( c(1, 0),
+                   prob=c(.5, .5),
+                   size =  3,
+                   replace = TRUE) 
+flips.2
+```
+
+
+
+Now let's imagine flipping a coin 3 times 1000 times. We will use the matrix function to organize the 3000 flips. Because we want to count the number of heads it will be easier if we represent heads as 1 and tails as 0. 
+
+```{r}
+set.seed(674)
+
+thousand.flips.of.3 <- replicate( 1000, sample( c(1, 0),
+                                                prob=c(.5, .5),
+                                                size =  3,
+                                                replace = TRUE) 
+                                  )
+
+```
+
+Now we can calculate how many heads were in each try by adding up the columns of the matrix, then the table function counts how many of each result happened.
+
+```{r}
+how.many.heads <- colSums(thousand.flips.of.3)
+table(how.many.heads)
+```
+
+
+*So according to this simulation what is the chance that a person gets 3 heads with a fair coin?*
+<!-- If the null hypothesis that the coin is fair (p = .5) is true then based on my data there is a 14.3% chance (143/1000) that I would see results this strange or stranger.  -->
+
+
+
+Is that so strange that you would believe that the coin is not fair?
+<!-- No 14.3% is a large number so that would not be an uncommon occurrence. I can't say the coin is definitely fair but I can't reject the null hypothesis.  -->
+
+
+
+#### Something weirder...
+
+What if your friend flips their coin and they get heads 8 times our of 8. Run a simulation like the above and determine if you would reject the hypothesis that the coin is fair?
+
+
+```{r}
+set.seed(674)
+
+thousand.flips.of.8 <- replicate( 1000, sample( c(1, 0),
+                                                prob=c(.5, .5),
+                                                size =  8,
+                                                replace = TRUE) 
+                                  )
+
+how.many.heads.8 <- colSums(thousand.flips.of.8)
+table(how.many.heads.8)
+```
+
+<!-- If the null hypothesis that the coin is fair (p = .5) is true then based on my data there is a 0.5% chance (5/1000) that I would see results this strange or stranger. This is very rare so I can reject the null hypothesis that I have a fair coin and accept the alternative that the coin is unfair (p is not equal to .5). -->
+
+
+
+
+#### One more time. 
+
+What if your friend instead flipped their coin and got 8 out of 10 flips to be heads. Then we need to calculate not the likelihood of getting exactly 8, but also everything that is weirder than 8. Do that and report the estimate of the p-value from your experiment. 
+
+```{r}
+set.seed(675)
+
+thousand.flips.of.10 <- replicate( 1000, sample( c(1, 0),
+                                                prob=c(.5, .5),
+                                                size =  10,
+                                                replace = TRUE) 
+                                  )
+
+how.many.heads.10 <- colSums(thousand.flips.of.10)
+table(how.many.heads.10)
+```
+
+
+
+
+
+
+### Apendex
+
+This is a brief explanation of some complicated concepts in the summary table of a linear and multilinear correlation model. 
+
+#### Residual standard error
+
+```{r}
+camry$Residuals <- resid(linMod1)
+camry$Predictions <- predict(linMod1)
+```
+
+This is essentially the standard deviation of the residuals. It helps us to know how off our answer could be. The residuals should be fairly normal (and they are with one outlier as we can see below).
+
+```{r}
+hist(camry$Residuals)
+```
+This lets us know that via the Normal model and the empirical rule that most residuals are within 2 standard deviations of the mean. 
+
+The formula for this is:
+
+$$ s_e =  \sqrt{ \frac{ \Sigma(y- \hat{y})^2}{n-2}  }    $$
+
+It can be simplified by thinking of it as taking the sum of the squared residuals and dividing it by n-2 then taking the square root of everything. Note that we will never do this other than using the summary tables.
+
+The chunk below is for reference only you will never need to use this. It is to show you what is really happening behind the scenes. 
+```{r}
+#Residual standard error
+
+#First square residuals and sum them
+sum.square.resid <- sum( camry$Residuals^2 )
+
+#Then divide square residuals by n - (number of variables + 1)
+square.residuals.divided <- sum.square.resid/(length(camry$Residuals)-2)
+
+#Finally take the square root 
+resid.std.error <- sqrt(square.residuals.divided)
+resid.std.error
+```
+
+```{r}
+2768.761*2
+summary(camry$Price)
+```
+
+
+So about 95% of the time our guesses will be off by less than 5,538. Considering that the prices range from 1,500 to 17,998 being 5,538 off is pretty bad. Thus our model is not that great. 
+
+
+#### Std Error of the Coeffiecients
+
+The bad news is that the std error of the coefficient SE(b1) for a simple linear regression is not easily explained or quantified. Its formula is 
+
+$$ SE(b_1) = \frac{ s_e}{s_x\sqrt{n-1}}$$
+The chunk below is for reference only you will never need to use this. It is to show you what is really happening behind the scenes. 
+```{r}
+# Divide residual std error by the std deviation of explanatory variable times the sqrt of n-1
+
+resid.std.error /( sd(camry$Mileage) * sqrt(length(camry$Mileage)-1) )
+```
+
+The best way to think of this value is that if we took many samples of data each time we would create a different line. This value is a way of estimating how much these lines would differ from one another. 
+
+This gets much more complicated with multilinear regression and requires linear algebra to compute. 
+
+#### t value
+
+The t value is essentially the z-score of the coefficient where the mean would be 0 and the standard deviation is the std error of the coefficient.
+
+```{r}
+(-7.465e-02 - 0)/0.007462374
+```
+
+#### p value 
+
+The p value is obtained by using the t distribution in a very similar way that we did when we used the pnorm function with the normal distribution.
+
+```{r}
+pt(-10.00352, 54)*2
+```
+6.75e-14
+
+

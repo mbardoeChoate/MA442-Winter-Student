@@ -1,0 +1,297 @@
+---
+title: "Linear Regression"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "4/12/2020 rev 1/24/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+#Linear Regression
+
+What you will learn in this lesson:
+
+* Learn about creating scatter plots
+* Describing scatter plots
+* Finding and understanding correlation
+* Running a simple linear regression
+* Interpreting the slope and intercept of a linear regression.
+* Using the regression model to make predictions
+
+
+
+The data set we will look at is USJudgeRatings which is a built in data set that looks at Lawyers' ratings of state judges in the US Superior Court. 
+
+
+```{R}
+head(USJudgeRatings)
+
+```
+
+USJudgeRatings is a data frame containing 43 observations on 12 numeric variables.
+
+[,1]	CONT	Number of contacts of lawyer with judge.
+[,2]	INTG	Judicial integrity.
+[,3]	DMNR	Demeanor.
+[,4]	DILG	Diligence.
+[,5]	CFMG	Case flow managing.
+[,6]	DECI	Prompt decisions.
+[,7]	PREP	Preparation for trial.
+[,8]	FAMI	Familiarity with law.
+[,9]	ORAL	Sound oral rulings.
+[,10]	WRIT	Sound written rulings.
+[,11]	PHYS	Physical ability.
+[,12]	RTEN	Worthy of retention.
+
+
+
+We are going to try to see if there is an association between the ratings for Judicial Integrity and Demeanor. Let's look at the first few values in each category. 
+
+```{R}
+head(USJudgeRatings$INTG)
+head(USJudgeRatings$DMNR)
+```
+
+
+##Scatterplots
+
+Scatterplots will be very important in understanding if there is an association between quantitative variables. Let's learn how to create them. 
+
+First, we need to decide which variable should go on the x-axis and which should go on the y-axis. Ideally we will put the explanatory variable on the x-axis and the response variable on the y-axis. When choosing which is which try to think about which variable is more likely to be the one that causes the other to change. This is the explanatory variable.
+
+
+There are several ways to create a scatterplot. I think the best is to write:
+
+plot(response variable ~ explanatory variable) 
+
+In this case plot( USJudgeRatings$INTG ~ USJudgeRatings$DMNR) 
+
+
+```{R}
+
+plot( USJudgeRatings$INTG ~ USJudgeRatings$DMNR, 
+     main = "Scatter Plot of Judges Ratings on Demeanor and Integrity",
+     xlab = "Demeanor Rating",
+     ylab = "Integrity Rating",
+     col = "blue",                  #color of the boarder of the points
+     bg = "red",                    #color of the inside of the points ( for shapes 21-25 only )
+     pch = 21,                      #shape of the points
+     cex = 1.5)                     #size of the points
+     
+
+```
+
+When analyzing a scatterplot what we want to do is try to picture what the function that best represents the data would look like. We do this by looking at three main things:
+
+*Shape*: What is the shape of the scatterplot? Do the dots look like they would best be described as a line (linear), as some sort of exponential or quadratic curved shape (curved or non-linear) or do they have no discernible shape at all (cloudlike).
+
+
+*Direction*: As the graph moves from left to right what happens with the y variable? Does it tend to go from low to high (positive) from high to low (negative) or a wave like pattern, or no direction whatsoever.
+
+*Strength*: How closely grouped are the points? If they are very close to the function we say that the association is strong if they are loosely grouped around the function we say the association is weak.
+
+The above scatterplot of Judges Ratings on Demeanor and Integrity would be described as *linear*, *positive*, and having a *very strong association*.
+
+
+##Correlation
+
+A relationship between two variables is called an *association*. A special type of association is when two quantitative variables have a linear relationship. 
+
+According to the Oxford Dictionary the definition of correlation is "a mutual relationship or connection between two or more things." In statistics we use the word association to talk about this type of relationship. *Correlation* is reserved to describe the *strength* of the *liner relationship* between *two quantitative variables*.
+
+Before using correlation check:
+   1.  Are both variables quantitative? Note that season and temperature are not correlated even though they are associated!
+   2.  Is their association linear? Note that height and age are not correlated even though they are associated!
+    
+Since the Judges Ratings on Demeanor and Integrity are both quantitative and linear, we can find their correlation like this:
+
+```{r}
+cor(USJudgeRatings$INTG, USJudgeRatings$DMNR)
+```
+
+Correlation sometimes written as *r* ranges from 1 to -1. A value close to 1 represents a *strong and positive* association. A value close to -1 represents a *strong and negative* association. A value close to 0 represents a *no association*. 
+
+In general the following table gives a fairly accurate way to think about correlation. 
+
+| correlation | interpretation |
+|-------------|----------------|
+| 0 - 0.2     | none           |
+| .2-.5       | weak           |
+| .5 - .75    | moderate       |
+| .75-.9      | strong         |
+| .9-.99999   | very strong    |
+| 1           | perfect        |
+
+
+##Linear Regression
+
+If two values are correlated we may want to find a model or equation that lets us predict the value of the response variable for any value of the explanatory variable.
+
+
+We can create a linear model by performing a simple linear regression. The command is ```lm```. 
+```{R}
+linearMod.INTG.DMNR <- lm(INTG ~ DMNR, data = USJudgeRatings)
+```
+
+Once it is stored, we can see the results a few different ways. To see the simple linear function we can use *print*
+
+
+```{R}
+print(linearMod.INTG.DMNR)
+
+```
+
+This tells us that in order to get the best prediction for a judge's integrity rating (INTG) we should take his demeanor rating (DMNR) and multiply it by .6495 and then add 3.1387. Another way to write this is:
+
+$$\rm \widehat{INTG} = .6495(DMNR) + 3.1387$$
+
+The "hat" over INTG means predicted.
+
+This should look like a linear function to you. You may remember linear functions written as 
+$$ \widehat y = mx+b$$
+In our example:
+y-hat is the predicted INTG rating
+m is the number under DMNR in the printout which is the coefficient of the x variable. This is the most important value in this function. It tells us what we should expect will happen to the response variable for each additional increase of the explanatory variable. In this example for each additional point of DMNR we would expect a judge to have an additional .6495 points of INTG.
+x is the judges actual DMNR rating
+b is the value under Intercept which is the y-intercept. This value is what we would expect if the explanatory value was 0. 
+
+Since this is the equation of a line we can draw that line on our graph using the abline function.
+
+```{r}
+#First make the graph
+
+plot( USJudgeRatings$INTG ~ USJudgeRatings$DMNR, 
+     main = "Scatter Plot of Judges Ratings on Demeanor and Integrity",
+     xlab = "Demeanor Rating",
+     ylab = "Integrity Rating",
+     col = "blue",  
+     bg = "red",
+     pch = 21,
+     cex = 1.5
+      )
+#Now add the line of best fit.
+abline(linearMod.INTG.DMNR)
+
+```
+
+
+
+
+
+##Predictions
+Let's see how to use this formula to predict things. If we had a judge with an DMNR rating of 5.3 then we would expect their INTG rating to be:
+
+```{r}
+.6495 * (5.3) + 3.1387
+```
+If we had a judge with an DMNR rating of 2 then we would expect their INTG rating to be:
+```{r}
+.6495 * (2) + 3.1387
+```
+If we had a judge with an DMNR rating of 7.7 then we would expect their INTG rating to be:
+
+```{r}
+.6495 * (7.7) + 3.1387
+```
+
+
+A faster way to make multiple predictions is to use the following code
+
+```{r}
+#Create a list of values to base predictions off.
+
+predict.data.frame <- data.frame( DMNR = c(5.3, 2, 7.7 ) )
+
+#Make the predictions
+
+predict.data.frame$Predicted.INTG <- predict(linearMod.INTG.DMNR, predict.data.frame)
+
+predict.data.frame
+
+```
+
+Notice that the answers here are nearly the same as the ones above. They are slightly different due to rounding. 
+
+
+
+## Your Turn
+
+Is there a relationship between the diameter (labeled Girth) and height of a tree?
+
+```{R}
+data(trees)
+head(trees)
+```
+This data set provides measurements of the diameter, height and volume of timber in 31 felled black cherry trees. Note that *the diameter (in inches) is erroneously labelled Girth in the data.* It is measured at 4 ft 6 in above the ground.
+
+Girth -	numeric	Tree diameter (rather than girth, actually) in inches
+Height -	numeric	Height in ft
+Volume -	numeric	Volume of timber in cubic ft
+
+
+Create a scatterplot of girth vs height where girth is the explanatory variable. Make sure that it has a good title and good labels. 
+
+```{R}
+
+
+```
+
+Describe the shape, direction, and strength of the association:
+
+*your answer here*
+
+
+
+Is it appropriate to use correlation to talk about the relationship between these variables? Explain why or why not.
+
+*your answer here*
+
+
+
+Find the correlation between diameter and height.
+
+```{r}
+
+
+```
+
+*What does this tell you about the strength*
+
+
+
+Create a linear model and print out the results
+
+```{r}
+
+
+```
+
+
+
+Find the equation of the line of best fit and explain in context what the slope and y-intercept tell us.
+
+*Your answer here*
+
+
+
+
+
+
+Make a scatterplot that includes the line of best fit.
+
+```{r}
+
+
+```
+
+
+
+Predict the height of trees with diameters of 5, 6, 7, 8, 9, 10, 11, 12, 13 and 15.7
+
+```{r}
+
+
+```
+

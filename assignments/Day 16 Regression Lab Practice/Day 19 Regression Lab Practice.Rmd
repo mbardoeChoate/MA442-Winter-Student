@@ -1,0 +1,63 @@
+---
+title: "Regression Lab Practice"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "2/12/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+## Regression Lab Practice
+
+In the up coming lab you will be asked to choose from several datasets. You will be asked to determine some variable within that dataset to try and predict. Then in a document show your process to finding that model. Finally you will be given a few rows of data and you are to compare your predictions in those rows with the true answers in the data.
+
+
+
+This assignment is to practice that process with the following dataset.
+
+```{r}
+
+kc.house=read.csv("kc_house_data.csv")
+head(kc.house)
+str(kc.house)
+
+```
+
+https://www.kaggle.com/swathiachath/kc-housesales-data
+
+## Instructions
+
+* Explore the data, and decide on a variable to predict using linear or multilinear regression
+
+* Use the techniques that you have learned in class to create an equation for that variable, and make sure that your equation explains as much as you can, but does not overfit the data. Show your work and comment on the choices that you make. Tell the story of how you came to this model.
+
+* Use your model to predict the value of the chosen variable for this group Camrys that are not part of the original dataset.
+
+### Exploration
+Discuss your method for finding the model. Explain what you are looking for and how you are going about creating your model. Explain why you are choosing the variables and how you can tell how good your model is.
+
+
+
+### Model Creation
+Write down the equation of your model and explain what each of the numbers means
+
+
+### Prediction
+Use your model to predict the values of the houses in the kc_predict data file.
+
+
+```{r}
+
+```
+
+
+#### Make a display and discuss the residuals 
+Create a residual plot and talk about what it means.
+
+```{r}
+
+
+```
+

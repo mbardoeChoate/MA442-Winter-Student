@@ -1,0 +1,447 @@
+---
+title: "Regression with a Categorical Variable"
+author: "Carey Kopeikin and Matthew Bardoe"
+date: "4/21/2020 rev 2/8/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+ 
+
+# Day 15: Regression with a categorical variable
+
+In this data we are looking at the effect of various categorical variables on continuous quantitative variables. This is not the first time we have seen this as we already did it briefly in the housing problem when we tried to find out if knowing if a house had a garage was useful in our model. 
+
+
+Let’s load a dataset that looks at students’ scores on various assessments and several factors that may be associated with the scores.
+
+**NOTE: The data in this dataset is not real. It was created for an educational setting.**
+
+```{R}
+exams<-read.csv("exams.csv")
+```
+
+Let's look at the data using the ```head``` and ```str``` commands.
+
+```{R}
+head(exams)
+str(exams)
+```
+
+
+Let's start by investigating if there are any categorical variables that effect a student’s math scores. For ease, let's focus on ```gender```, ```lunch```, and ```testprep```. The easiest way to see if these variables would be important is to make displays of data that would allow our eye to see the relative impact of these variables. Let's do that now, for instance with gender.
+
+The main way we investigate with categorical variables is with a boxplot. So make one of those comparing gender and mathscore. 
+
+## Creating Graphs and Tables
+
+```{r}
+
+boxplot(exams$mathscore ~ exams$gender,
+        main = "Math Score by Gender",
+        xlab = "Gender",
+        ylab = "Math Score",
+        col = c("green","blue") )
+
+```
+
+
+We can also use the ```tapply```  function. The code below separates the exam data by gender then calculates the mean, standard deviation, and the number of observations in that group.
+
+```{r}
+
+tapply(exams$mathscore, exams$gender, mean)
+tapply(exams$mathscore, exams$gender, sd)
+tapply(exams$gender, exams$gender, length)
+mean(exams$mathscore, na.rm=T)
+
+```
+
+
+**Question** Describe in your own words the difference in math scores between gender1 and gender2. Use the box plot and the tapply data in your answer.
+
+**Write your answer here**
+
+The show that gender 1 tends to have a higher average math score by almost 5 points. The boxplot shows that gender 1 also has a higher median Q3 and Q1. Gender 1 also has a slightly smaller standard deviation showing that gender 1 is more consistent. Gender 2 has more outliers at the bottom of the boxplot. 
+
+
+
+## Using regression
+
+We can also use the tools of regression to look at the effect of gender. To do this we will need to change the data so that gender can be considered a numerical variable. We will do this by introducing a *dummy variable* called ```is.gender2``` that has a value of 0 if the observation is a "gender1", and 1 if observation is a "gender2".
+
+```{r}
+exams$is.gender2 <- ifelse(exams$gender=="gender2", 1,0)
+
+head(exams[ c("gender", "is.gender2")], 10)
+```
+
+Now that is.gender2 is quantitative we can make a rather strange scatterplot.
+```{r}
+plot( exams$mathscore ~ exams$is.gender2, 
+     main = "Scatter Plot of Math Scores by Gender",
+     xlab = "Square Feet",
+     ylab = "Price (dollars)",
+     col = "blue",                 
+     bg = "red",                    
+     pch = 21,                    
+     cex = 1.5)                   
+     
+```
+
+
+Now that we have this variable we can use it to create a linear model.
+
+```{r}
+linMod.math.isgender2 <- lm( mathscore ~ is.gender2, data = exams)
+
+summary(linMod.math.isgender2)
+```
+
+
+**Question** What does the slope in this regression represent? 
+
+The slope tells us that if we know a person is gender 2 we would expect their math score to be 4.3491 points lower.  
+
+
+
+**Question** Is it greater, lesser, or equal to effect that what was indicated in the difference of the means above?
+
+The same
+
+
+
+**Question** Is gender independent of mathscore? How do you know?
+
+No because there are three *** next to the variable. 
+
+
+**Question** How useful is gender in predicting mathscore? How do you know? 
+
+Not very effective as gender just explains 2.088% of the variation in math scores.
+
+
+
+
+Let's dig deeper into other variables. Let's look at the ```lunch``` variable. And do so in the same way. 
+
+Create boxplots comparing math scores by ```lunch``` 
+Boxplot lunch
+```{r}
+boxplot( exams$mathscore ~ exams$lunch,
+        main = "Math Score by Lunch Type",
+        xlab = "Lunch Type",
+        ylab = "Math Score",
+        col = 3:12 )
+
+```
+
+
+
+Create a table that compares the mean, standard deviation, and the number of students who get free or reduced lunch to those who do not.
+
+```{r}
+tapply(exams$mathscore, exams$lunch, mean)
+tapply(exams$mathscore, exams$lunch, sd)
+tapply(exams$gender, exams$lunch, length)
+```
+
+
+Create a variable ```is.free.lunch``` that assigns a 1 if the student receives free or reduced lunch and a 0 otherwise.
+
+```{r}
+exams$is.free.lunch <- ifelse(exams$lunch=="free/reduced", 1,0)
+
+```
+
+Create a simple linear model with ```mathscores``` as the response variable and ```is.free.lunch``` as the explanatory variable. Then look at the summary of that model.
+
+
+```{r}
+linMod.math.is.free.lunch <- lm( mathscore ~ is.free.lunch, data = exams)
+
+summary(linMod.math.is.free.lunch)
+```
+
+
+**Question** What have learned about the effect free/reduced lunch has on the expected math scores of students.
+
+We expect a student who gets a free or reduced lunch to do 12.9435 points worse.
+
+
+
+**Question** Run a similar analysis on testprep. Discuss effect of test prep on math scores.
+
+
+Boxplot testprep
+```{r}
+boxplot( exams$mathscore ~ exams$testprep,
+        main = "Math Score by Exam Prep",
+        xlab = "Did Student Do Test Prep",
+        ylab = "Math Score",
+        col = 3:12 )
+```
+
+```{r}
+tapply(exams$mathscore, exams$testprep, mean)
+tapply(exams$mathscore, exams$testprep, sd)
+tapply(exams$gender, exams$testprep, length)
+```
+
+
+```{r}
+exams$is.testprep.completed <- ifelse(exams$testprep=="completed", 1,0)
+
+```
+
+
+```{r}
+linMod.math.is.testprep.completed <- lm( mathscore ~ is.testprep.completed, data = exams)
+
+summary(linMod.math.is.testprep.completed)
+```
+
+
+
+## Putting it together with Multilinear regression
+
+It is possible that there are connections between the effects of these variables. For instance, between testprep and lunch. Both of these can be connected to family resources. Using multilinear regression, we can look to separate the effects of those. Let's create a model that incorporates all the variables we have so far. 
+
+```{r}
+multiMod.math.completed.lunch.gender <- lm( mathscore ~ is.testprep.completed + is.free.lunch + is.gender2, data = exams)
+
+summary(multiMod.math.completed.lunch.gender)
+```
+
+
+**Question** Do these results support the theory that there is a connection between each of the variables and mathscore?
+
+No is.testprep.completed has not stars next to it and is therefore not statistically significant. 
+
+
+**Question** Why does test prep now have a negative slope?
+
+It appears that test prep was a proxy for wealth. Lunch turned out to be the better proxy and therefore reduced the perceived impact of test prep. That said the slope here doesn't matter since it is not statistically significant.
+
+
+Try this linear regression with the categorical variables. 
+
+```{r}
+multiMod.cat.variables <- lm( mathscore ~ testprep + lunch + gender, data = exams)
+
+summary(multiMod.cat.variables)
+```
+
+**Question** How is this different from what we have done above? 
+
+The coefficients of test prep and free lunch are now positive.
+
+
+
+
+
+
+Note that the reason for the signs being opposite on the second regression has to do with the order of the levels of the categorical variables. In multi2 R automatically created the variable ```gendergender2``` and assigned a 0 to the value "gender1" and a 1 to the value "gender2" just like we did in the variable ```is.gender 1```. When it created the variable ```lunchstandard``` It assigned a 0 to "free/reduced" and a 1 to "standard". This is because when R creates the variables automatically it looks at the order of the levels of the variables and gives a 0 to the value of the first level and a 1 to the value of the second. The name that R gives the variable will be the name of the original categorical variable followed by the value that is assigned a 1. ```gendergender2``` is made from the variable ```gender``` and the value "gender2" is assigned a 1. ```lunchstandard``` is created from the variable ```lunch``` and the value "standard" is assigned a 1.
+
+If we want to change the order of the levels we just use the same code we have been using for a while
+
+```{r}
+exams$lunch <- factor(exams$lunch,
+                      levels = c("standard", "free/reduced") )
+```
+
+
+Now rerun the code for mult2.
+
+```{r}
+multiMod.cat.variables <- lm( mathscore ~ testprep + lunch + gender, data = exams)
+
+summary(multiMod.cat.variables)
+```
+
+Notice that ```lunchstandard``` became ```lunchfree/reduced``` and the coefficient is now negative.
+
+
+
+Change the levels so that ```testprepnone``` becomes ```testprepcompleted``` and rerun the code for mult2 
+
+```{r}
+exams$testprep <- factor(exams$testprep,
+                      levels = c("none", "completed") )
+
+multiMod.cat.variables <- lm( mathscore ~ testprep + lunch + gender, data = exams)
+
+summary(multiMod.cat.variables)
+```
+
+
+
+Since ```testprepcompleted``` is not useful for our model lets remove it and run a new model.
+
+```{r}
+multiMod.cat.variables <- lm( mathscore ~  lunch + gender, data = exams)
+
+summary(multiMod.cat.variables)
+```
+
+**Question** How useful is our model?
+
+Our model explains 18.56% of the variation in mathscores.
+
+
+We can also have both quantitative and categorical variables in the same model. Lets add "readingscore" into our model.
+
+```{r}
+mult4 <- lm(mathscore ~ gender + lunch + readingscore, data=exams)
+summary(mult4)
+```
+
+**Question** How useful is our model?
+
+Our model explains 82.63% of the variation in mathscores.
+
+
+**Question** Which is more useful to our model, ```gendergender2``` or ```lunchfree/reduced```?
+
+
+```{r}
+mult4 <- lm(mathscore ~ lunch + readingscore, data=exams)
+summary(mult4)
+```
+
+```{r}
+mult4 <- lm(mathscore ~ gender + readingscore, data=exams)
+summary(mult4)
+```
+
+Gender is more important since when I remove lunch I still explain 80.12% but when I remove gender I explain only 69.02%
+
+
+## You try
+
+Find the effects of the ```lunch```, ```gender```, and ```testprep``` on writing score. 
+
+```{r}
+mult.ws.l.g.t <- lm(writingscore ~ gender + lunch+testprep, data=exams)
+summary(mult.ws.l.g.t)
+```
+testprepcompleted  has no stars so I will remove it.
+
+```{r}
+mult.ws.l.g.t <- lm(writingscore ~ gender + lunch, data=exams)
+summary(mult.ws.l.g.t)
+```
+
+predicted writingscore = 10.3416(gendergender2) - 9.5395(lunchfree/reduced) + 66.3698
+
+
+**Question** Describe the quantitative expected effect of each variable on writing scores. 
+
+Holding all other variables constant:
+If a person was gender2 we would expect them to score 10.3416 more points on their writing score.
+If a person got free or reduced lunch we would expect them to score 9.5395 fewer points on their writing score.
+
+
+
+**Question** A friend is considering taking a test prep course to improve their math scores. Their current score is a 58. They feel that they need at least a 65 to have a chance at their goals. Is such a gain likely given the data here?
+
+All we know from this information is if they are taking a prep course so we should use the linear model:
+
+```{r}
+linMod.math.is.testprep.completed <- lm( mathscore ~ is.testprep.completed, data = exams)
+
+summary(linMod.math.is.testprep.completed)
+```
+
+This suggests that they will get a 6.4 point bump but they need at least a 7 point bump. So I would not recomend it. 
+
+Another answer that works:
+
+test prep does not even show up as relevant in many of our models. It appears to be a proxy for wealth so what matters is if the person has the wealth to begin with not if they take the course.
+
+
+
+
+Predict the math score of someone of gender1 who gets free lunch and has completed a test prep class. First think about which model to use.
+
+Our best model using these variables:
+```{r}
+multiMod.cat.variables <- lm( mathscore ~  lunch + gender, data = exams)
+
+summary(multiMod.cat.variables)
+```
+
+predicted math score =  -12.8377(lunchfree/reduced) - 4.0451(gendergender2) +  73.3895
+
+We can use the above formula for someone of gender1 who gets free lunch and has completed a test prep class.
+
+```{r}
+ -12.8377*1 - 4.0451*0 +  73.3895
+```
+predicted math score = 60.5518
+
+**Question** How accurate do you think your model will be? 
+
+The model only explains 18.56% of the variation so not very accurate. 
+
+
+Predict the math score of someone of unknown gender who gets standard lunch did not take a test prep course and earned a 60 on their reading score.
+
+We do not know gender so we need a new model
+```{r}
+multiMod.cat.variables <- lm( mathscore ~ readingscore+ lunch + testprep, data = exams)
+
+summary(multiMod.cat.variables)
+```
+
+testprepcompleted  has no stars so I will remove it.
+
+```{r}
+multiMod.cat.variables <- lm( mathscore ~  readingscore +lunch , data = exams)
+
+summary(multiMod.cat.variables)
+```
+predicted math score = 0.77569*(readingscore) -6.56837(lunchfree/reduced) + 14.80289  
+
+We can use this formula to predict the score of someone of unknown gender who gets standard lunch did not take a test prep course and earned a 60 on their reading score.
+
+```{r}
+0.77569*(60)-6.56837*(0) + 14.80289
+```
+predicted math score = 61.34429
+
+**Question** How accurate do you think your model will be? 
+This model will be decent as it explains 69.02% of the variation in math scores.
+
+
+
+Predict the math score of someone of gender2 who did not take a test prep course and earned a 40 on their reading score.
+
+```{r}
+multiMod.cat.variables <- lm( mathscore ~  readingscore +testprep , data = exams)
+
+summary(multiMod.cat.variables)
+```
+
+expected math score = 0.81997(readingscore) + 3.15140(testprepcompleted) + 7.34033   
+
+So we can use this to predict the math score of someone of gender2 who did not take a test prep course and earned a 40 on their reading score.
+
+```{r}
+0.81997*(40) + 3.15140*(0) + 7.34033  
+```
+
+predicted math score = 40.13913
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+headcirumference,length,Birthweight,Gestation,smoker,mheight,mppwt,mage35
+13,21,7.3,41,nonsmoker,64,135,No
+14,20,7.8,41,smoker,63,145,Yes
+13,21,7,41,smoker,64,110,No
+13,20,6.9,41,smoker,63,117,No
+15,22,10,41,smoker,68,154,No
+14,21,8.6,42,nonsmoker,69,143,No
+13,21,8,42,nonsmoker,65,132,No
+13,22,10,44,nonsmoker,63,125,No
+13,19,8.5,45,smoker,64,118,No
+14,20,8.9,44,nonsmoker,68,150,No

@@ -1,0 +1,185 @@
+---
+title: "Linear Regression Part 2"
+author: "Carey Kopeikin and Matt Bardoe"
+date: "4/13/2020 rev 1/25/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+```
+
+```{r}
+df1 <- read.csv( "nonlinear.examples.csv")
+df1
+```
+
+```{r}
+df1$Exp = 1.12^df1$x.values 
+```
+
+
+```{r}
+rands <- runif( 40, 8, 40)
+```
+
+```{r}
+df1$Exp <- df1$Exp +rands
+```
+
+
+```{r}
+plot(df1$Exp~df1$x.values)
+```
+
+```{r}
+lin.mod.Exp.x.val <- lm(Exp ~ x.values, data = df1)
+```
+
+```{r}
+plot(df1$Exp~df1$x.values)
+
+abline(lin.mod.Exp.x.val)
+```
+
+```{r}
+df1$Predictions <- predict(lin.mod.Exp.x.val)
+df1$Residuals <- resid(lin.mod.Exp.x.val)
+```
+
+```{r}
+plot(df1$Residuals~df1$Predictions)
+abline(0,0)
+```
+
+
+
+```{r}
+df1$NegLog <- 1/log(sqrt(df1$x.values))*120
+```
+
+```{r}
+rand2 <- runif(40, 1, 3)
+```
+
+```{r}
+df1$NegLog <- df1$NegLog +rand2
+```
+
+
+
+```{r}
+plot(df1$NegLog~df1$x.values)
+```
+
+
+```{r}
+lin.mod.NegLog.x.val <- lm(NegLog ~ x.values, data = df1)
+
+```
+
+```{r}
+plot(df1$NegLog~df1$x.values)
+
+abline(lin.mod.NegLog.x.val)
+```
+
+```{r}
+df1$Predictions <- predict(lin.mod.NegLog.x.val)
+df1$Residuals <- resid(lin.mod.NegLog.x.val)
+```
+
+```{r}
+plot(df1$Residuals~df1$Predictions)
+abline(0,0)
+```
+
+
+
+
+```{r}
+df1$Log <-log(sqrt(df1$x.values))*40
+```
+
+```{r}
+rand2 <- runif(40, 1, 3)
+```
+
+```{r}
+df1$Log <- df1$Log +rand2
+```
+
+
+
+```{r}
+plot(df1$Log~df1$x.values)
+```
+
+
+```{r}
+lin.mod.Log.x.val <- lm(Log ~ x.values, data = df1)
+
+```
+
+```{r}
+plot(df1$Log~df1$x.values)
+
+abline(lin.mod.Log.x.val)
+```
+
+```{r}
+df1$Predictions <- predict(lin.mod.Log.x.val)
+df1$Residuals <- resid(lin.mod.Log.x.val)
+```
+
+```{r}
+plot(df1$Residuals~df1$Predictions)
+abline(0,0)
+```
+
+```{r}
+write.csv(df1, "nonlinear.csv")
+```
+
+
+```{r}
+df1$invExp = 1/1.12^df1$x.values *100
+```
+
+```{r}
+plot(df1$invExp~df1$x.values)
+```
+
+```{r}
+rands <- runif( 40, 1, 3)
+```
+
+```{r}
+df1$invExp <- df1$invExp +rands
+```
+
+
+```{r}
+plot(df1$invExp~df1$x.values)
+```
+
+```{r}
+lin.mod.invExp.x.val <- lm(invExp ~ x.values, data = df1)
+```
+
+```{r}
+plot(df1$invExp~df1$x.values)
+
+abline(lin.mod.invExp.x.val)
+```
+
+
+```{r}
+df1$Predictions <- predict(lin.mod.invExp.x.val)
+df1$Residuals <- resid(lin.mod.invExp.x.val)
+```
+
+```{r}
+plot(df1$Residuals~df1$Predictions)
+abline(0,0)
+```

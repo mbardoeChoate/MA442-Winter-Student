@@ -1,0 +1,31 @@
+---
+title: 'Day 22: Spreadsheets Intro to Pivot tables'
+author: "Matthew Bardoe"
+date: "2023-12-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Day 2: Advanced Modeling Techniques and Introduction to Pivot Tables
+
+**Objective:** Expand the retirement model and introduce pivot tables for data analysis.
+
+#### Lesson Breakdown:
+
+1. **Enhancing the Retirement Model (30 minutes)**
+   - Introduce concepts like compound interest and variable annual contributions.
+   - Guide students to incorporate these into their models.
+   - Show how to use formulas to automate calculations.
+
+2. **Introduction to Pivot Tables (20 minutes)**
+   - Explain the importance of pivot tables in summarizing and analyzing data.
+   - Demonstrate creating a pivot table using a sample dataset.
+
+3. **Hands-on Pivot Table Exercise (10 minutes)**
+   - Provide a dataset (e.g., a company's financial data).
+   - Instruct students to summarize the data in multiple ways using pivot tables.
+
+

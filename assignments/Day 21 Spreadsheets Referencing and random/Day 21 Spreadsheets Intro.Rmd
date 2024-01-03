@@ -1,0 +1,33 @@
+---
+title: 'Day 21 Spreadsheets: Intro, Referencing, and Random'
+author: "Matthew Bardoe"
+date: "2023-12-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### Day 1: Introduction to Spreadsheets and Basic Modeling
+
+**Objective:** Introduce spreadsheets and start building a basic retirement savings model.
+
+#### Lesson Breakdown:
+
+1. **Introduction to Spreadsheets (15 minutes)**
+   - Overview of spreadsheet applications in financial modeling.
+   - Introduction to the interface and basic features.
+
+2. **Building a Basic Retirement Savings Model (30 minutes)**
+   - Explain simple retirement saving concepts (e.g., initial savings, annual contributions).
+   - Guide students to set up a model with these elements.
+   - Introduce cell referencing for calculations (absolute and relative references).
+
+3. **Integrating Randomness (15 minutes)**
+   - Discuss the concept of variability in savings (e.g., fluctuating interest rates).
+   - Teach how to generate random numbers to simulate this variability.
+   - Assign homework: Enhance the model by including random interest rates.
+
+
