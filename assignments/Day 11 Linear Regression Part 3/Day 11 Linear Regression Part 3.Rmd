@@ -15,7 +15,6 @@ knitr::opts_chunk$set(echo = TRUE)
 What you will learn in this lesson:
 
 * Interpreting residual plots
-* What to do with data that is non-linear
 
 
 #Example 1
@@ -23,6 +22,7 @@ Upload the data set ```nonlinear.examples.csv``` and call it ```examples.data```
 
 ```{r}
 examples.data <- read.csv("../../data/nonlinear.examples.csv")
+head(examples.data)
 ```
 
 
