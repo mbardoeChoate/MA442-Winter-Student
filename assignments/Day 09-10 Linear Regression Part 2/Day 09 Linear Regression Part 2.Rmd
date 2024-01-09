@@ -51,55 +51,72 @@ Create a scatterplot with labels making sure to put the explanatory and
 response variables on the correct axis.
 
 ```{r}
-
+plot(USArrests$Murder~USArrests$Assault, 
+     main="Murder and Assault rates in 1973",
+     col="red",
+     pch=2,
+     cex=.3,
+     xlab="Assault Rate",
+     ylab="Murder Rate")
 
 ```
 
 Describe the shape, direction, and strength of the association:
 
-*Your answer here.*
+*The shape is linear; the direction is positive, and the strength is moderate.*
 
 Is it appropriate to use correlation to talk about the relationship
 between these variables? Explain why or why not.
 
-*Your answer here.*
+*YES! Anytime we have a linear relationship, we can use correlation.*
 
 Find the correlation between assault and murder.
 
 ```{r}
-
+cor(USArrests$Murder, USArrests$Assault)
 ```
 
 What does this tell you about the strength?
 
-*Your answer here.*
+*The correlation is actually pretty strong.*
 
 Create a linear model and print out the results. Call this model:
 linearMod.murder.assault
 
 ```{r}
-
+linearMod.murder.assault=lm(Murder~Assault, data=USArrests)
+summary(linearMod.murder.assault)
 
 ```
 
 Find the equation of the line of best fit and explain in context what
 the slope and y-intercept tell us.
 
-*Your answer here*
+$\widehat{Murder}=.042 Assault + 0.632$
 
 Make a scatterplot that includes the line of best fit.
 
 ```{r}
+plot(USArrests$Murder~USArrests$Assault, 
+     main="Murder and Assault rates in 1973",
+     col="red",
+     pch=2,
+     cex=.3,
+     xlab="Assault Rate",
+     ylab="Murder Rate")
 
+abline(linearMod.murder.assault,
+       col="blue")
 ```
 
 Predict the murder rate of states with 100 assaults per 100K people, 230
 assaults per 100K people, and 40 assaults per 100K people
 
 ```{r}
-
-
-
+some.assaults=data.frame(Assault=c(100, 230, 40 ))
+predict(linearMod.murder.assault, some.assaults)
+.042*40 + 0.632
+.042*c(100,230,40)+0.632
 ```
 
 ### Residuals

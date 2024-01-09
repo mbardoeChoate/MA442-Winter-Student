@@ -1,7 +1,7 @@
 ---
 title: "Day 10 Linear Regression Part 3"
 author: "Carey Kopeikin"
-date: "1/9/2022"
+date: "1/9/2022 rev 1/5/2024"
 output: pdf_document
 ---
 
@@ -10,19 +10,19 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-#Linear Regression Day 3
+## Linear Regression Part 3
 
 What you will learn in this lesson:
 
 * Interpreting residual plots
-* What to do with data that is non linear
+* What to do with data that is non-linear
 
 
 #Example 1
 Upload the data set ```nonlinear.examples.csv``` and call it ```examples.data```
 
 ```{r}
-examples.data <- read.csv("nonlinear.examples.csv")
+examples.data <- read.csv("../../data/nonlinear.examples.csv")
 ```
 
 
@@ -80,17 +80,15 @@ Do you still think a linear model is appropriate? Why?
 
 
 
-```{r}
-
-```
 
 
 
-#Example 2
+## Example 2
+
 Upload the data set ```nonlinear.examples.csv``` and call it ```examples.data```
 
 ```{r}
-examples.data <- read.csv("nonlinear.examples.csv")
+examples.data <- read.csv("../../data/nonlinear.examples.csv")
 ```
 
 
