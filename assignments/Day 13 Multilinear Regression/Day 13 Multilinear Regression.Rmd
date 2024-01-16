@@ -12,14 +12,14 @@ knitr::opts_chunk$set(echo = TRUE, error=TRUE)
 
 
 
-# Day 12 Multilinear regression
+# Day 13 Multilinear regression
 
 Previously we have described how to use one quantitative variable to create a model that predicts another quantitative variable. That process is called regression, and now we will allow ourselves to utilize multiple variables to create our models. Let's start by looking at some data about housing.
 
 Load up the dataset.
 
 ```{R}
-houses<-read.csv("Nashville.csv")
+houses<-read.csv("../../data/Nashville.csv")
 ```
 
 

@@ -21,7 +21,7 @@ What you will learn in this lesson:
 Upload the data set ```nonlinear.examples.csv``` and call it ```examples.data```
 
 ```{r}
-examples.data <- read.csv("../../data/nonlinear.examples.csv")
+examples.data <- read.csv("nonlinear.examples.csv")
 head(examples.data)
 ```
 
@@ -88,7 +88,7 @@ Do you still think a linear model is appropriate? Why?
 Upload the data set ```nonlinear.examples.csv``` and call it ```examples.data```
 
 ```{r}
-examples.data <- read.csv("../../data/nonlinear.examples.csv")
+examples.data <- read.csv("data/nonlinear.examples.csv")
 ```
 
 
