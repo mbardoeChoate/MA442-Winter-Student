@@ -21,7 +21,7 @@ Let’s load a dataset that looks at students’ scores on various assessments a
 **NOTE: The data in this dataset is not real. It was created for an educational setting.**
 
 ```{R}
-exams<-read.csv("exams.csv")
+exams<-read.csv("../../data/exams.csv")
 ```
 
 Let's look at the data using the ```head``` and ```str``` commands.
