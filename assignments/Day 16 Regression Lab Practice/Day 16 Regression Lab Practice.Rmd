@@ -17,7 +17,7 @@ This assignment is to practice that process with the following dataset.
 
 ```{r}
 
-kc.house=read.csv("kc_house_data.csv")
+kc.house=read.csv("../../data/kc_house_data.csv")
 head(kc.house)
 str(kc.house)
 
@@ -53,6 +53,6 @@ Write down the equation of your model and explain what each of the numbers means
 Use your model to predict the values of the houses in the `kc_predict.csv` data file. And then comment on how well your model did.
 
 ```{r}
-kc_predic=read.csv("kc_predict.csv")
+kc_predic=read.csv("../../data/kc_predict.csv")
 ```
 
