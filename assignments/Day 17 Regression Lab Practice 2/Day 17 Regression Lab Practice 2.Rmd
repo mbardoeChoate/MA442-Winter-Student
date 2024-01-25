@@ -1,0 +1,43 @@
+---
+title: "Regression Lab Practice 2"
+author: "Matthew Bardoe"
+date: "2024-01-25"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Regression Practice 2
+
+This is your second chance to practice for the Lab assessment. The setup of the assessment is that you are going be given some choices about a dataset, and once you have chosen a dataset you will choose a variable to predict using multilinear regression.
+
+You should imagine that you are a Data Scientist and you have been hired by someone that wants you take their data and create an equation to predict one of the variables in the dataset from the others.
+
+I want see the following in your work:
+
+-   Correlations with the variable of interest and several other variables
+
+-   Several multilinear models
+
+-   Explanation of what is good and bad about each
+
+-   Models that use both quantitative and categorical data
+
+-   A residual plot to determine how well your model works and some description of your conclusions from that plot.
+
+-   A written version of the equation that is your final model
+
+-   A list of predictions based on the data given in the predict dataset.
+
+In this practice case. The dataset will be the `student.mat.csv` dataset. This dataset includes information about students in two different portuguesse schools. You can find more information about the meaning of the variables here: <https://archive.ics.uci.edu/dataset/320/student+performance>
+
+```{r}
+student.perf=read.csv("../../data/student-mat.csv")
+head(student.perf)
+str(student.perf)
+student.predict=read.csv("../../data/student-mat-predict.csv")
+```
+
+## Your work here
