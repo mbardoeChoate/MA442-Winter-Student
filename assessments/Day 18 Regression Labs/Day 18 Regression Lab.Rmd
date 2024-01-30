@@ -1,0 +1,92 @@
+---
+title: "Regression Lab"
+author: "Matthew Bardoe"
+date: "2024-01-30"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Regression Lab
+
+### Instructions
+
+In this assessment you have some choices about which dataset you use. *You need only analyze one dataset*. Please make clear which dataset you have chosen and which variable you are going to predict.
+
+You should imagine that you are a Data Scientist and you have been hired by someone that wants you take their data and create an equation to predict one of the variables in the dataset from the others.
+
+I want see the following in your work:
+
+-   Correlations with the variable of interest and several other variables
+
+-   Several multilinear models
+
+-   Explanation of what is good and bad about each
+
+-   Models that use both quantitative and categorical data
+
+-   A residual plot to determine how well your model works and some description of your conclusions from that plot.
+
+-   A written version of the equation that is your final model
+
+-   A list of predictions based on the data given in the predict dataset.
+
+
+### Datasets
+
+#### Automobile Dataset
+
+You can find out more about this dataset at: 
+
+https://archive.ics.uci.edu/dataset/10/automobile
+
+```{r}
+auto.data=read.csv("autos-data.csv")
+auto.predict=read.csv("autos-predict.csv")
+head(auto.data)
+str(auto.data)
+
+```
+
+
+#### Wine Quality Dataset
+
+You can find out more about this dataset at:
+
+https://archive.ics.uci.edu/dataset/186/wine+quality
+
+```{r}
+wine.data=read.csv("wine-data.csv")
+wine.predict=read.csv("wine-predict.csv")
+head(wine.data)
+str(wine.data)
+
+```
+
+#### Bike Sharing Dataset
+
+You can find out more about this dataset at:
+
+https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset
+
+```{r}
+bike.data=read.csv("bike-data.csv")
+bike.predict=read.csv("bike-predict.csv")
+head(bike.data)
+str(bike.data)
+
+
+```
+
+
+### Your Work
+
+*Name: *
+
+*Dataset: *
+
+*Variable to predict: *
+
+*Honor Code: *
